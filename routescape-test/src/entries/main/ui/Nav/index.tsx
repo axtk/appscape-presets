@@ -13,27 +13,27 @@ export const Nav = () => {
         <nav>
             <p>
                 {withRoute('/',
-                    <strong>Intro</strong>,
+                    <span>Intro</span>,
                     <A href="/">Intro</A>
                 )}
                 {' | '}
                 {withRoute('/about',
-                    <strong>About</strong>,
+                    <span>About</span>,
                     <A href="/about">About</A>
                 )}
                 {' | '}
                 {withRoute('/x',
-                    <strong>MW stop</strong>,
+                    <span>MW stop</span>,
                     <A href="/x">MW stop</A>
                 )}
                 {' | '}
                 {withRoute('/x2',
-                    <strong>preventDefault</strong>,
+                    <span>preventDefault</span>,
                     <A href="/x2" onClick={handlePreventedClick}>preventDefault</A>
                 )}
                 {' | '}
                 {withRoute('/intro',
-                    <strong>Intro redirect</strong>,
+                    <span>Intro redirect</span>,
                     <A href="/intro">Intro redirect</A>
                 )}
                 {' | '}
