@@ -1,5 +1,7 @@
-import {Suspense, useCallback, useEffect, useState} from 'react';
+import {Suspense, useCallback, useContext, useEffect, useState} from 'react';
+import {useStore} from 'groundstate';
 import {useRoute} from 'routescape';
+import {AppContext} from '../AppContext';
 import {Intro} from '../Intro/lazy';
 import {About} from '../About/lazy';
 import {Nav} from '../Nav';
@@ -7,6 +9,7 @@ import './index.css';
 
 export const Content = () => {
     let [route, withRoute] = useRoute();
+    let [{routescapeVersion}] = useStore(useContext(AppContext));
     let [hasUnsavedChanges, setUnsavedChanges] = useState(false);
 
     let baseTitle = 'Router test';
@@ -74,6 +77,10 @@ export const Content = () => {
                         <About/>
                     </Suspense>
                 ))}
+                <footer>
+                    <hr/>
+                    <p><code>routescape: {routescapeVersion}</code></p>
+                </footer>
             </body>
         </html>
     );
