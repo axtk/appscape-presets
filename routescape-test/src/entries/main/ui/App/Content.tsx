@@ -1,6 +1,6 @@
-import {Suspense, useCallback, useContext, useEffect, useState} from 'react';
+import {Suspense, useCallback, useContext, useState} from 'react';
 import {useStore} from 'groundstate';
-import {useRoute} from 'routescape';
+import {useRoute, useNavigationComplete, useNavigationStart} from 'routescape';
 import {AppContext} from '../AppContext';
 import {Intro} from '../Intro/lazy';
 import {About} from '../About/lazy';
@@ -9,7 +9,7 @@ import './index.css';
 
 export const Content = () => {
     let [route, withRoute] = useRoute();
-    let [{routescapeVersion}] = useStore(useContext(AppContext));
+    let [{routescapeVersion}] = useStore(useContext(AppContext), false);
     let [hasUnsavedChanges, setUnsavedChanges] = useState(false);
 
     let baseTitle = 'Router test';
@@ -21,32 +21,29 @@ export const Content = () => {
         setUnsavedChanges(value => !value);
     }, []);
 
-    useEffect(() => {
-        return route.use(nextHref => {
-            console.log('Content Effect mw', [route.href, nextHref]);
-            if (nextHref === '/intro') {
-                route.assign('/');
-                return false;
-            }
-            if (nextHref === '/x')
-                return false;
-            if (hasUnsavedChanges)
-                return false;
-        });
+    useNavigationStart(nextHref => {
+        console.log('Content nav start', [route.href, nextHref]);
+        if (nextHref === '/intro') {
+            route.assign('/');
+            return false;
+        }
+        if (nextHref === '/x')
+            return false;
+        if (hasUnsavedChanges)
+            return false;
     }, [route, hasUnsavedChanges]);
 
-    useEffect(() => {
-        let setTitle = () => {
-            if (route.matches('/'))
+    useNavigationComplete(href => {
+        console.log('Content nav complete');
+        switch (href) {
+            case '/':
                 document.title = `Intro / ${baseTitle}`;
-            else if (route.matches('/about'))
+                break;
+            case '/about':
                 document.title = `About / ${baseTitle}`;
-        };
-
-        setTitle();
-
-        return route.subscribe(setTitle);
-    }, [route]);
+                break;
+        }
+    }, []);
 
     return (
         <html lang="en">
