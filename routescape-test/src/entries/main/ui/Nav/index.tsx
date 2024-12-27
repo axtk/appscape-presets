@@ -37,6 +37,11 @@ export const Nav = () => {
                     <A href="/intro">Intro redirect</A>
                 )}
                 {' | '}
+                {withRoute('/about',
+                    <span>About replace</span>,
+                    <A href="/about" data-navigation-mode="replace">About replace</A>
+                )}
+                {' | '}
                 <button onClick={() => { route.assign('/'); }}>
                     Home
                 </button>
