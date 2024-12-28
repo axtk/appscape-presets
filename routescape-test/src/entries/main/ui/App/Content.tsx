@@ -51,7 +51,7 @@ export const Content = () => {
                 <meta charSet="utf-8"/>
                 <meta name="viewport" content="width=device-width"/>
                 <title>{baseTitle}</title>
-                <link rel="stylesheet" href="/-/main.css"/>
+                <link rel="stylesheet" href="/-/main/index.css"/>
                 <link type="image/x-icon" rel="icon" href="/favicon.svg"/>
             </head>
             <body>
